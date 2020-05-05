@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>O2One Simple Chat</title>
+		<title>Bootstrap Example</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+		/>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				font: 13px Helvetica, Arial;
+			}
+			form {
+				background: #000;
+				padding: 3px;
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+			}
+			form input {
+				border: 0;
+				padding: 10px;
+				width: 90%;
+				margin-right: 0.5%;
+			}
+			form button {
+				width: 9%;
+				background: rgb(130, 224, 255);
+				border: none;
+				padding: 10px;
+			}
+			#messages {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+			#messages li {
+				padding: 5px 10px;
+			}
+			#messages li:nth-child(odd) {
+				background: #eee;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">O2One</a>
+				</div>
+				<ul class="nav navbar-nav" >
+					<li><a href = "#" data-toggle="modal" data-target="#loginModal">LogIn</a></li>
+					<li><a href = "#" data-toggle="modal" data-target="#signupModal">Signup</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<!-- Login Modal -->
+		<div class="modal fade" id="loginModal" role="dialog">
+			<div class="modal-dialog modal-md">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Login</h4>
+				</div>
+					<form action="">
+						<div class="form-group">
+						  <label for="email">Email address:</label>
+						  <input type="email" class="form-control" id="email">
+						</div>
+						<div class="form-group">
+						  <label for="pwd">Password:</label>
+						  <input type="password" class="form-control" id="pwd">
+						</div> 
+					</form>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal" id="loginSubmit">submit</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+
+		<!-- Signup Modal -->
+		<div class="modal fade" id="signupModal" role="dialog">
+			<div class="modal-dialog modal-md">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Modal Header</h4>
+				</div>
+				<div class="modal-body">
+				  <p>This is a small modal.</p>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+
+
+		<ul id="messages"></ul>
+		<form action="">
+			<input id="input" autocomplete="off" /><button>Send</button>
+		</form>
+	</body>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+	<script>
+		var socket = io();
+
+		$(function () {
+			var socket = io();
+			$('form').submit(function (e) {
+				const data = {
+					token: localStorage.getItem('token', data.token),
+					message: $('#input').val(),
+				};
+
+				e.preventDefault(); // prevents page reloading
+				socket.emit('user.send', data);
+				$('#message').val('');
+				return false;
+			});
+		});
+
+		// Login
+		$('#loginSubmit').submit((e) => {
+			e.preventDefault();
+
+		} )
+	</script>
+</html>
